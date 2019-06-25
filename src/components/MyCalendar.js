@@ -1,27 +1,32 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Form from "react-bootstrap/es/Form";
 
 class MyCalendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate: new Date().getFullYear()
+            [this.props.name]: new Date()
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(date) {
         this.setState({
-            startDate: date
-        });
+            [this.props.name]: date
+        }, () => this.props.getDate({target: {name: this.props.name, value: this.state.date}}))
+    }
+
+    componentDidMount() {
+        this.props.getDate({target: {name: this.props.name, value: this.state.date}})
     }
 
     render() {
+        console.log(this.props)
         return (
             <DatePicker
-                selected={this.state.startDate}
+                disabled={this.props.disabled}
+                selected={this.state[this.props.name]}
                 onChange={this.handleChange}
             />
         );

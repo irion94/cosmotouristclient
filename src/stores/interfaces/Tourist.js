@@ -1,34 +1,26 @@
-import {observable, action} from 'mobx'
+import axios from 'axios'
 
-class Tourist {
+export class Tourist {
     _name;
     _surname;
     _sex;
     _birthday;
     _notes;
 
-
-    set name(value) {
-        this._name = value;
+    constructor({name, surname, sex, birthday, notes}) {
+        this._name = name;
+        this._surname = surname;
+        this._sex = sex;
+        this._birthday = birthday;
+        this._notes = notes;
     }
 
-    set surname(value) {
-        this._surname = value;
+    post(){
+        axios.post('http://localhost:8080/tourists', {name:this._name, surname:this._surname}, {
+            headers: {
+             'Content-Type': 'application/json'
+            }})
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
     }
-
-    set sex(value) {
-        this._sex = value;
-    }
-
-    set birthday(value) {
-        this._birthday = value;
-    }
-
-    set notes(value) {
-        this._notes = value;
-    }
-
-
 }
-
-//export const tourist = new Tourist();
