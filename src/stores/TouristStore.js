@@ -4,7 +4,7 @@ class TouristList{
     @observable data = [];
 
     @action pushTouristList(item){
-        this.data.unshift(item)
+        this.data.push(item)
     }
 
     @action setTouristList(array){

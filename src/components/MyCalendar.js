@@ -14,17 +14,26 @@ class MyCalendar extends Component {
     handleChange(date) {
         this.setState({
             [this.props.name]: date
-        }, () => this.props.getDate({target: {name: this.props.name, value: this.state.date}}))
+        }, () => this.props.getDate({target: {name: this.props.name, value: date}}))
     }
 
     componentDidMount() {
-        this.props.getDate({target: {name: this.props.name, value: this.state.date}})
+        this.props.getDate({target: {name: this.props.name, value: new Date()}})
     }
 
     render() {
-        console.log(this.props)
+        if(this.props.hour){
+            this.calendarProps = {
+                showTimeSelect:true,
+                timeFormat:"HH:mm",
+                timeIntervals:15,
+                dateFormat:"MMMM d, yyyy h:mm aa",
+                timeCaption:"time"
+            }
+        }
         return (
             <DatePicker
+                {...this.calendarProps}
                 disabled={this.props.disabled}
                 selected={this.state[this.props.name]}
                 onChange={this.handleChange}

@@ -21,7 +21,6 @@ class FlightForm extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log("STATE",this.state)
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -60,24 +59,23 @@ class FlightForm extends React.Component {
                 validated={validated}
                 // onSubmit={e => this.handleSubmit(e)}
             >
-                <Form.Row>
                     <Form.Row>
-                        <Form.Group as={Col} md="4" controlId="validationCustom01">
+                        <Form.Group as={Col} controlId="validationCustom01">
                             <Form.Label>Arrive Date</Form.Label>
-                            <MyCalendar name="arriveDate" getDate={this.onChange} disabled={inputDisabled}/>
+                            <MyCalendar name="arriveDate" getDate={this.onChange} disabled={inputDisabled} hour={true}/>
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
 
                     <Form.Row>
-                        <Form.Group as={Col} md="4" controlId="validationCustom02">
+                        <Form.Group as={Col} controlId="validationCustom02">
                             <Form.Label>Departure Date</Form.Label>
-                            <MyCalendar name="departureDate" getDate={this.onChange} disabled={inputDisabled}/>
+                            <MyCalendar name="departureDate" getDate={this.onChange} disabled={inputDisabled} hour={true}/>
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
 
-                    <Form.Group as={Col} md="4" controlId="validationCustom03">
+                    <Form.Group as={Col} controlId="validationCustom03">
                         <Form.Label>Number of seats</Form.Label>
                         <Form.Control
                             value={this.state.flight.name}
@@ -91,7 +89,7 @@ class FlightForm extends React.Component {
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group as={Col} md="4" controlId="validationCustom04">
+                    <Form.Group as={Col} controlId="validationCustom04">
                         <Form.Label>Ticket cost</Form.Label>
                         <Form.Control
                             value={this.state.flight.name}
@@ -105,7 +103,7 @@ class FlightForm extends React.Component {
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
-                </Form.Row>
+
                 {
                     !inputDisabled ?
                         <Button onClick={(e) => this.handleSubmit(e)} className="float-left">{buttonTitle}</Button>

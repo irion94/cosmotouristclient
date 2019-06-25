@@ -5,7 +5,7 @@ class Popup extends React.Component{
         const {close, children} = this.props;
         return(
             <div className="my-modal">
-                <div className="modal-content animate">
+                <div className="modal-content animate text-center">
                     <button className="close" onClick={() => {close()}}>x</button>
                     {
                         children

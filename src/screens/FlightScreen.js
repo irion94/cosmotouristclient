@@ -1,11 +1,12 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import {observer} from "mobx-react";
+
 import Popup from "../components/Popup";
 import FlightList from "../components/FlightList";
 import FlightForm from "../components/FlightForm";
 import {fetchFlight} from "../api/FlightApi";
 import {flightStore} from "../stores/FlightStore";
-import {observer} from "mobx-react";
 
 @observer
 class FlightScreen extends React.Component {
@@ -26,7 +27,6 @@ class FlightScreen extends React.Component {
      componentDidMount() {
          fetchFlight()
             .then((res) => {
-                console.log(res.data);
                 flightStore.setFlightList(res.data)
             })
     }
@@ -45,7 +45,7 @@ class FlightScreen extends React.Component {
                 {
                     this.state.formVisible ?
                         <Popup close={this.showModal}>
-                            <FlightForm/>
+                            <FlightForm buttonTitle="Add Flight"/>
                         </Popup> :
                         null
                 }

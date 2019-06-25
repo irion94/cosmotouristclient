@@ -1,11 +1,12 @@
 import React from 'react'
-import {Button, Form} from 'react-bootstrap'
+import {Button} from 'react-bootstrap'
+import {observer} from "mobx-react";
+
 import ClientForm from "../components/ClientForm";
 import TouristList from "../components/TouristList";
 import Popup from "../components/Popup";
 import {fetchTourists} from "../api/TouristApi";
 import {touristStore} from "../stores/TouristStore";
-import {observer} from "mobx-react";
 import {fetchFlight} from "../api/FlightApi";
 import {flightStore} from "../stores/FlightStore";
 
@@ -29,10 +30,9 @@ class TouristScreen extends React.Component {
         await fetchTourists()
             .then((res) => {
                 touristStore.setTouristList(res.data)
-            })
+            });
         await fetchFlight()
             .then((res) => {
-                console.log(res.data)
                 flightStore.setFlightList(res.data)
             })
     }

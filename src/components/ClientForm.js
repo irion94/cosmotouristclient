@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Form} from 'react-bootstrap'
+import {Button, Col, Form, Row} from 'react-bootstrap'
 import {observer} from 'mobx-react'
 
 import MyCalendar from "./MyCalendar";
@@ -50,6 +50,7 @@ class ClientForm extends React.Component {
     render() {
         const { validated, inputDisabled } = this.state;
         const {buttonTitle} = this.props;
+        console.log(this.state.person)
         return (
             <Form
                 noValidate
@@ -83,11 +84,12 @@ class ClientForm extends React.Component {
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Label as="legend" column sm={2}>
+                        <Form.Label as="legend">
                             Gender
                         </Form.Label>
-                        <Col sm={10}>
+                        <Col as={Row} className="justify-content-center">
                             <Form.Check
+                                className="m-2"
                                 disabled={inputDisabled}
                                 onChange={(e) => this.onChange(e)}
                                 required
@@ -98,6 +100,7 @@ class ClientForm extends React.Component {
                                 id="formHorizontalRadios1"
                             />
                             <Form.Check
+                                className="m-2"
                                 disabled={inputDisabled}
                                 onChange={(e) => this.onChange(e)}
                                 required
@@ -108,12 +111,13 @@ class ClientForm extends React.Component {
                                 id="formHorizontalRadios2"
                             />
                             <Form.Check
+                                className="m-2"
                                 disabled={inputDisabled}
                                 onChange={(e) => this.onChange(e)}
                                 required
-                                value="Mixed"
+                                value="Other"
                                 type="radio"
-                                label="Mixed"
+                                label="Other"
                                 name="sex"
                                 id="formHorizontalRadios3"
                             />
@@ -124,7 +128,9 @@ class ClientForm extends React.Component {
                 <Form.Row>
                     <Form.Group as={Col} md="4" controlId="validationCustom02">
                         <Form.Label>Birthday</Form.Label>
-                        <MyCalendar key={"birthday"} getDate={this.onChange} disabled={inputDisabled}/>
+                        <Col>
+                            <MyCalendar name={"birthday"} getDate={this.onChange} disabled={inputDisabled}/>
+                        </Col>
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Form.Row>

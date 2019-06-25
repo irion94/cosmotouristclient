@@ -34,7 +34,7 @@ export const updateTourist = async (id, data) => {
 
 //DELETE
 export const deleteTourist = (id) => {
-    axios.delete(`${http}/tourists/${id}`)
+    return axios.delete(`${http}/tourists/${id}`)
         .then(() => {
             fetchTourists()
                 .then((res) => {

@@ -1,26 +1,35 @@
 import React from 'react'
 import {Button, ButtonGroup, Table} from 'react-bootstrap'
+import PropTypes from "prop-types";
+import {observer} from 'mobx-react'
+
 import Popup from "./Popup";
 import {deleteFlight} from "../api/FlightApi";
 import TouristList from "./TouristList";
-import PropTypes from "prop-types";
-import {observer} from 'mobx-react'
 
 @observer
 class FlightList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            visible: false
+            visible: false,
+            selected: null
         }
     }
 
     onClick(item) {
-        if(!this.props.buttons) this.setState({selected: item.id}, () => this.props.getFlightId(item))
+        if (!this.props.buttons) {
+            if (this.state.selected !== item.id) {
+                this.setState({selected: item.id}, () => this.props.getFlightId({[this.props.markColor]: item}))
+            }
+            else {
+                this.setState({selected: null}, () => this.props.getFlightId({[this.props.markColor]: null}))
+            }
+        }
     }
 
     render() {
-        const {maxHeight, buttons, minSeats} = this.props;
+        const {maxHeight, buttons, minSeats, markColor} = this.props;
         return (
             <div style={{overflow: 'auto', maxHeight: maxHeight}} className="p-2">
                 {
@@ -49,10 +58,10 @@ class FlightList extends React.Component {
                         this.props.data.map(item => {
                                 if (buttons || item.numberOfSeats >= minSeats) {
                                     return <tr onClick={() => this.onClick(item)}
-                                               style={this.state.selected === item.id ? {backgroundColor: 'red'} : null}>
+                                               style={this.state.selected === item.id ? {backgroundColor: markColor} : null}>
                                         <td>{item.id}</td>
-                                        <td>{item.departureDate}</td>
-                                        <td>{item.arriveDate}</td>
+                                        <td>{new Date(item.departureDate).toLocaleString()}</td>
+                                        <td>{new Date(item.arriveDate).toLocaleString()}</td>
                                         <td>{item.numberOfSeats}</td>
                                         <td>{item.numberOfPassengers}</td>
                                         <td>{item.ticketCost}</td>
@@ -87,13 +96,15 @@ class FlightList extends React.Component {
 FlightList.propTypes = {
     data: PropTypes.array,
     buttons: PropTypes.bool,
-    minSeats: PropTypes.number
+    minSeats: PropTypes.number,
+    markColor: PropTypes.string
 };
 
 FlightList.defaultProps = ({
     minSeats: 0,
     data: [],
     buttons: true,
+    markColor: "transparent",
     getFlightId: () => {
     }
 });
